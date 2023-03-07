@@ -354,10 +354,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
-      - - {x: -12, y: -2}
-        - {x: -12, y: 2}
-        - {x: 11, y: 2}
-        - {x: 11, y: -2}
+      - - {x: -16, y: -2}
+        - {x: -16, y: 2}
+        - {x: 16, y: 2}
+        - {x: 16, y: -2}
       tessellationDetail: 0
       bones: []
       spriteID: 34e9d98962245fb45a71d53137cf4f8c
@@ -379,10 +379,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
-      - - {x: -12, y: -2}
-        - {x: -12, y: 2}
-        - {x: 11, y: 2}
-        - {x: 11, y: -2}
+      - - {x: -16, y: -2}
+        - {x: -16, y: 2}
+        - {x: 16, y: 2}
+        - {x: 16, y: -2}
       tessellationDetail: 0
       bones: []
       spriteID: 1b499aa8322faba46bb3bcb91bbecbb6
@@ -404,10 +404,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
-      - - {x: -12, y: 0.5}
-        - {x: -12, y: 4.5}
-        - {x: 11, y: 4.5}
-        - {x: 11, y: 0.5}
+      - - {x: -17, y: 0.5}
+        - {x: -17, y: 4.5}
+        - {x: 17, y: 4.5}
+        - {x: 17, y: 0.5}
       tessellationDetail: 0
       bones: []
       spriteID: 1c6b328a579b5594e918b77d625aebef
@@ -781,8 +781,16 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
+      outline:
+      - - {x: -16, y: -16}
+        - {x: -16, y: 16}
+        - {x: 16, y: 16}
+        - {x: 16, y: -16}
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: -16, y: 16}
+        - {x: 16, y: 16}
+        - {x: 16, y: -16}
       tessellationDetail: 0
       bones: []
       spriteID: 9cc1e4c6315652d43b56e8f60caab89d
@@ -974,13 +982,13 @@ TextureImporter:
       spriteSheet1_44: 180918772
       spriteSheet1_47: -1067704070
       spriteSheet1_57: 26981672
-      spriteSheet1_35: -2018312800
       spriteSheet1_64: 1655742095
-      spriteSheet1_32: 1622730210
       spriteSheet1_1: -584383010
+      spriteSheet1_32: 1622730210
+      spriteSheet1_18: -1812964844
       spriteSheet1_56: -1322050740
       spriteSheet1_7: -1331046742
-      spriteSheet1_18: -1812964844
+      spriteSheet1_35: -2018312800
       spriteSheet1_40: -792180645
       spriteSheet1_19: -2110428664
       spriteSheet1_6: -1703358277
