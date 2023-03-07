@@ -5,29 +5,34 @@ using UnityEngine;
 public class gloob: MonoBehaviour{
 
     [SerializeField] Rigidbody2D rd;
-    public SpriteRenderer spriteR;
+    [SerializeField] SpriteRenderer spriteR;
+    [SerializeField] BoxCollider2D box2D;
+    [SerializeField] LayerMask platformMask;
     [SerializeField] AnimtionScript anm;
+
     [Header ("Movement")]
     [SerializeField] float speed = 2.5f;
-    [SerializeField] bool isJumping = false;
     public bool jump = false, jumpApex = false;
-    public float jumpHeight = 5f, fallSpeed = 200f;
-    public float timer = 0f;
-    public float horizontal , damperTime=0.5f;
+    [SerializeField] float jumpHeight = 5f, fallSpeed = 200f;
+    [SerializeField] float timer = 0f, Friction=0.5f;
+    [SerializeField] float horizontal;
    
 
     void Start(){
         rd = GetComponent<Rigidbody2D>();
+        box2D = GetComponent<BoxCollider2D>();
         spriteR = GetComponent<SpriteRenderer>();
     }
 
 
     void Update(){
         horizontal = Input.GetAxisRaw("Horizontal");
-        if(Input.GetButtonDown("Jump") && !isJumping){
+        bool ground = isGround();
+        if(Input.GetButtonDown("Jump") && ground){
+            
             jump = true;
         }
-        else if(isJumping && (Input.GetButtonUp("Jump") || rd.velocity.y < 0.0f)){
+        else if(!ground && (Input.GetButtonUp("Jump") || rd.velocity.y < 0.0f)){
             jumpApex = true;
         }
     }
@@ -36,6 +41,8 @@ public class gloob: MonoBehaviour{
         Move();
         gloobJump();
     }
+
+
     public void Move(){
 
         if(horizontal !=0){
@@ -48,17 +55,15 @@ public class gloob: MonoBehaviour{
             else{
                 spriteR.flipX = false;
             }
+            
         }
         else if(rd.velocity.x != 0f)
         {
             timer += Time.fixedDeltaTime;
- 
-            float newSpeed = Mathf.Lerp(speed, 0f, timer / damperTime);
+            float newSpeed = Mathf.Lerp(speed, 0f, timer / Friction);
             if (rd.velocity.x < 0)
                 newSpeed = -newSpeed;
- 
             rd.velocity = new Vector2(newSpeed, 0f);
-        
         }
         else if (rd.velocity == Vector2.zero){           
             anm.ChangeAnimationState("Idle", 1);
@@ -75,27 +80,12 @@ public class gloob: MonoBehaviour{
             }
         }
         else if(jumpApex){
-            jumpApex=false;
+            jumpApex = false;
             rd.AddForce(Vector2.down * fallSpeed);
         }
         
     }
     private bool isGround(){
-        
-    }
-    private void OnCollisionEnter2D(Collision2D other) {
-       if(other.gameObject.CompareTag("platform")){
-          
-            isJumping=false;
-        }
-        else{
-            Debug.Log("Unexpected Collision " + other.gameObject.name);
-        }
-        
-    }
-    private void OnCollisionExit2D(Collision2D other) {
-        if(other.gameObject.CompareTag("platform")){
-            isJumping=true;
-        }
+        return Physics2D.BoxCast(box2D.bounds.center, box2D.bounds.size, 0f, Vector2.down, 0.1f, platformMask);
     }
 }
