@@ -2678,11 +2678,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4708182948485005058, guid: 8a9e13b8a22b3d8438676cd9de1a8300, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.177
+      value: -1.27
       objectReference: {fileID: 0}
     - target: {fileID: 4708182948485005058, guid: 8a9e13b8a22b3d8438676cd9de1a8300, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.502
+      value: -3.42
       objectReference: {fileID: 0}
     - target: {fileID: 4708182948485005058, guid: 8a9e13b8a22b3d8438676cd9de1a8300, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2748,6 +2748,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: mainGloob
       objectReference: {fileID: 0}
+    - target: {fileID: 4708182948485005061, guid: 8a9e13b8a22b3d8438676cd9de1a8300, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1230178134, guid: 474487fef1c15ed40940d35618ce1659, type: 3}
     - target: {fileID: 4708182948485005087, guid: 8a9e13b8a22b3d8438676cd9de1a8300, type: 3}
       propertyPath: speed
       value: 6
