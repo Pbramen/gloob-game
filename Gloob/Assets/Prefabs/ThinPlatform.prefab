@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5282874069579390355}
   m_Layer: 6
   m_Name: ThinPlatform
-  m_TagString: platform
+  m_TagString: OneWay
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -14,8 +14,10 @@ public class gloob: MonoBehaviour{
     [SerializeField] float speed = 2.5f;
     public bool jump = false, jumpApex = false;
     [SerializeField] float jumpHeight = 5f, fallSpeed = 200f;
-    [SerializeField] float timer = 0f, Friction=0.5f;
+    [SerializeField] float Friction=0.25f, maxGravity;
     [SerializeField] float horizontal;
+   
+    
    
 
     void Start(){
@@ -35,6 +37,13 @@ public class gloob: MonoBehaviour{
         else if(!ground && (Input.GetButtonUp("Jump") || rd.velocity.y < 0.0f)){
             jumpApex = true;
         }
+        //implements very simplistic friction
+        if(Input.GetButtonUp("Horizontal")){
+            rd.velocity = (new Vector2 (rd.velocity.x * Friction, rd.velocity.y));
+        }
+        if(rd.velocity.y < maxGravity){
+            rd.velocity=(new Vector2(rd.velocity.x, maxGravity));
+        }
     }
     
     public void FixedUpdate(){
@@ -48,7 +57,6 @@ public class gloob: MonoBehaviour{
         if(horizontal !=0){
             rd.velocity = new Vector2(horizontal * speed, ((rd.velocity.y)));
             anm.ChangeAnimationState("Walking", 1);
-            timer =0;
             if(horizontal < 0){
                 spriteR.flipX = true;
             }
@@ -56,14 +64,6 @@ public class gloob: MonoBehaviour{
                 spriteR.flipX = false;
             }
             
-        }
-        else if(rd.velocity.x != 0f)
-        {
-            timer += Time.fixedDeltaTime;
-            float newSpeed = Mathf.Lerp(speed, 0f, timer / Friction);
-            if (rd.velocity.x < 0)
-                newSpeed = -newSpeed;
-            rd.velocity = new Vector2(newSpeed, 0f);
         }
         else if (rd.velocity == Vector2.zero){           
             anm.ChangeAnimationState("Idle", 1);
@@ -79,13 +79,18 @@ public class gloob: MonoBehaviour{
                 rd.velocity = new Vector2(0, rd.velocity.y);
             }
         }
-        else if(jumpApex){
+        if(jumpApex){
             jumpApex = false;
-            rd.AddForce(Vector2.down * fallSpeed);
+            rd.AddForce(Vector2.down * fallSpeed, ForceMode2D.Impulse);
         }
-        
     }
+
     private bool isGround(){
         return Physics2D.BoxCast(box2D.bounds.center, box2D.bounds.size, 0f, Vector2.down, 0.1f, platformMask);
+    }
+        void OnTriggerEnter2D(Collider2D other){
+        if(other.CompareTag("platform")){
+            rd.velocity = (new Vector2(rd.velocity.x, 0));
+        }
     }
 }
