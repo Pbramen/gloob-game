@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class gloob: MonoBehaviour{
 
@@ -17,7 +18,8 @@ public class gloob: MonoBehaviour{
     [SerializeField] float Friction=0.25f, maxGravity;
     [SerializeField] float horizontal;
    
-    
+   [Header ("Events")]
+    public UnityEvent gemPickUp;
    
 
     void Start(){
@@ -46,11 +48,6 @@ public class gloob: MonoBehaviour{
         }
     }
     
-    public void FixedUpdate(){
-        Move();
-        gloobJump();
-    }
-
 
     public void Move(){
 
