@@ -14,9 +14,8 @@ public class PlayerInput : MonoBehaviour
         bool ground = gloob.isGround();
         
         gloob.Horizontal = Input.GetAxisRaw("Horizontal");
-        if(Input.GetButtonDown("Jump") && ground){
-            gloob.Jump = true;
-            Debug.Log("Jump Running");
+        if((Input.GetButtonDown("Jump") && ground) || Input.GetButtonDown("Jump")){
+            gloob.canJump();
         }
         else if(!ground && (Input.GetButtonUp("Jump") ||velocityY < 0.0f)){
             gloob.JumpApex = true;
@@ -29,5 +28,9 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-  
+    void FixedUpdate(){
+        gloob.Move();
+        gloob.gloobJump();
+        gloob.resetJump();
+    }
 }

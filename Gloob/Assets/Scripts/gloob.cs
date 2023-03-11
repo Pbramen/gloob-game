@@ -14,10 +14,11 @@ public class gloob: MonoBehaviour{
     [Header ("Movement")]
     [SerializeField] float speed = 2.5f;
     [SerializeField] bool jump = false, jumpApex = false;
+    [SerializeField] int maxNumJump = 1, curJumps = 0;
     [SerializeField] float jumpHeight = 5f, fallSpeed = 200f;
     [SerializeField] float maxGravity;
     [SerializeField] float horizontal;
-   
+    [SerializeField] float aerialMovement = 2f;
    [Header ("Events")]
     public UnityEvent gemPickUp;
    
@@ -27,10 +28,11 @@ public class gloob: MonoBehaviour{
         spriteR = GetComponent<SpriteRenderer>();
     }
 
-    private void FixedUpdate() {
-        Move();
-        gloobJump();   
-    }
+    // private void FixedUpdate() {
+    //     Move();
+    //     gloobJump();   
+    //     resetJump();
+    // }
     //Moves Gloob and changes animation
     public void Move(){
         if(horizontal !=0){
@@ -52,9 +54,12 @@ public class gloob: MonoBehaviour{
     // Adds jumping mechanic using ground check
     public void gloobJump(){
         if(jump){
+            curJumps++;
             jump=false;
             float jForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * rd.gravityScale));
-            rd.AddForce(new Vector2(rd.velocity.x * 1.5f, jForce), ForceMode2D.Impulse);
+            //prevent multiple jumps from exponentially increasing jump
+            rd.velocity = Vector2.zero;
+            rd.AddForce(new Vector2(rd.velocity.x * aerialMovement, jForce), ForceMode2D.Impulse);
             if(Input.GetAxisRaw("Horizontal") == 0f){
                 rd.velocity = new Vector2(0, rd.velocity.y);
             }
@@ -64,8 +69,18 @@ public class gloob: MonoBehaviour{
             rd.AddForce(Vector2.down * fallSpeed, ForceMode2D.Impulse);
         }
     }
-    //========== Helper functions ==========
+    //==================== Helper functions ==================== 
     // stops gloob's vertical movement.
+    public void canJump(){
+        if(curJumps < maxNumJump){
+            jump=true;
+        }
+    }
+    public void resetJump(){
+        if(isGround() && (rd.velocity.y > -.05f && rd.velocity.y < .05f)){
+            curJumps = 0;
+        }
+    }
     public void stop(){
          rd.velocity = (new Vector2 (0, rd.velocity.y));
     }
@@ -84,10 +99,9 @@ public class gloob: MonoBehaviour{
         }
     }
     public void test(){
-        Debug.Log("Testing");
         gemPickUp?.Invoke();
     }
-    // ========== Properties ==========
+    // ==================== Properties ====================
     public Rigidbody2D RD{
         get{
             return rd;
@@ -127,6 +141,23 @@ public class gloob: MonoBehaviour{
         }
         set{
             horizontal = value;
+        }
+    }
+
+    public int CurJumps{
+        get{
+            return curJumps;
+        }
+        set{
+            curJumps = value;
+        }
+    }
+    public int MaxNumJump{
+        get{
+            return maxNumJump;
+        }
+        set{
+            maxNumJump = value;
         }
     }
 }
